@@ -1,0 +1,3 @@
+containerstack:
+    build: containerstack
+    privileged: true
