@@ -7,6 +7,7 @@ RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl s
 RUN git clone https://git.openstack.org/openstack-dev/devstack
 WORKDIR devstack
 RUN tools/create-stack-user.sh
+RUN chown -R stack /
 USER stack
 RUN wget https://raw.github.com/arithx/containerstack/master/localrc
 RUN ./stack.sh
