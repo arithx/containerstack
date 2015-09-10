@@ -1,5 +1,5 @@
 if [ ! -e "/usr/bin/git" ]; then
-    apt-get install git
+    apt-get install -qqy git
 fi
 
 if [ ! -e "/usr/bin/docker" ]; then
