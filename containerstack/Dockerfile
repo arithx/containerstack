@@ -10,6 +10,8 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
     apt-get -qqy install mysql-server
 
+RUN mysqld_safe &
+
 RUN git clone https://git.openstack.org/openstack-dev/devstack
 RUN devstack/tools/create-stack-user.sh
 RUN chown -R stack devstack
