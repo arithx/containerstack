@@ -1,6 +1,8 @@
 FROM ubuntu:trusty
 MAINTAINER Stephen Lowrie "stephen.lowrie@rackspace.com"
 
+EXPOSE 80 5000 8773 8774 8776 9292
+
 RUN apt-get update
 RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
 
