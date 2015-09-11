@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 MAINTAINER Stephen Lowrie "stephen.lowrie@rackspace.com"
 
-EXPOSE 80 5000 8773 8774 8776 9292
+EXPOSE 80 5000 8773 8774 8776 9292 3306
 
 RUN apt-get update
 RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
@@ -11,6 +11,8 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
     apt-get -qqy install mysql-server
 
 RUN mysqld_safe &
+
+RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
 RUN git clone https://git.openstack.org/openstack-dev/devstack
 RUN devstack/tools/create-stack-user.sh
