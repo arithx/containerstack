@@ -1,31 +1,24 @@
 FROM ubuntu:trusty
 MAINTAINER Stephen Lowrie "stephen.lowrie@rackspace.com"
 
-EXPOSE 80 5000 8773 8774 8776 9292 3306/tcp
+EXPOSE 80 5000 8773 8774 8776 9292 3306
 
 RUN sed -i.bak "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
 RUN cat /usr/sbin/policy-rc.d
-
-ENV MYSQL_USER=mysql \
-    MYSQL_DATA_DIR=/var/lib/mysql \
-    MYSQL_RUN_DIR=/run/mysqld \
-    MYSQL_LOG_DIR=/var/log/mysql
 
 RUN apt-get update
 RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
 
 RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
-    apt-get update \
-    && apt-get install -y mysql-server
+    apt-get -y install mysql-client mysql-server
 
-RUN wget https://raw.github.com/arithx/containerstack/master/entrypoint.sh -P /sbin
-#COPY entrypoint.sh /sbin/entrypoint.sh
-RUN chmod 755 /sbin/entrypoint.sh
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
-VOLUME ["${MYSQL_DATA_DIR}", "${MYSQL_RUN_DIR}"]
-ENTRYPOINT ["/sbin/entrypoint.sh"]
-CMD ["/usr/bin/mysqld_safe"]
+RUN wget https://raw.github.com/arithx/containerstack/master/startup.sh
+ADD ./startup.sh /opt/startup.sh
+
+CMD ["/bin/bash", "/opt/startup.sh"]
 
 #RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
 #    echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
@@ -35,8 +28,6 @@ CMD ["/usr/bin/mysqld_safe"]
 
 #CMD sudo /etc/init.d/mysql start
 #CMD mysqld_safe &
-
-CMD ps -aux
 
 CMD sudo mysql -uroot -ppassword -h127.0.0.1 -P3306 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
 
