@@ -26,7 +26,8 @@ CMD ["/bin/bash", "/opt/startup.sh"]
 #    echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
 #    apt-get -qqy install mysql-server
 
-#RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
+CMD sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
+CMD service restart mysql
 
 #CMD sudo /etc/init.d/mysql start
 #CMD mysqld_safe &
