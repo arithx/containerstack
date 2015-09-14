@@ -8,4 +8,7 @@ apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo 
 git clone https://github.com/openstack-dev/devstack
 devstack/tools/create-stack-user.sh
 chown -R stack devstack
-su -l stack -c "git clone https://github.com/openstack-dev/devstack; cd devstack; wget https://raw.github.com/arithx/containerstack/master/localrc; . stack.sh"
+chmod +rx ~
+wget https://raw.github.com/arithx/containerstack/master/stack_setup.sh -P /tmp
+chmod +755 /tmp/stack_setup.sh
+sudo -u stack /tmp/stack_setup.sh
