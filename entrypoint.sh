@@ -48,6 +48,7 @@ remove_debian_systen_maint_password() {
   # user can login without a password.
   #
   #sed 's/password = .*/password = /g' -i /etc/mysql/debian.cnf
+  echo "foo"
 }
 
 initialize_mysql_database() {
