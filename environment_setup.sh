@@ -13,4 +13,4 @@ fi
 
 git clone https://github.com/arithx/containerstack
 cd containerstack
-docker-compose up
+docker-compose build --no-cache
