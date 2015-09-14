@@ -19,7 +19,7 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
     apt-get update \
     && apt-get install -y mysql-server
 
-RUN wget https://raw.github.com/arithx/containerstack/master/entrypoint.sh /sbin/entrypoint.sh
+RUN wget https://raw.github.com/arithx/containerstack/master/entrypoint.sh -P /sbin
 #COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
