@@ -12,7 +12,7 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
 
 RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
-CMD service mysql start
+CMD sudo service mysql start
 
 RUN sudo mysql -uroot -ppassword -h127.0.0.1 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
 
