@@ -10,7 +10,7 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
     apt-get -qqy install mysql-server
 
-RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
+#RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
 CMD sudo /etc/init.d/mysql start
 
