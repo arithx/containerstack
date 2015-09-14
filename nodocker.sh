@@ -14,5 +14,5 @@ if [ "$(whoami)" != "stack" ] then
   sudo su stack -s "$0"
   exit
 else
-  exec sudo -u stack ./stack.sh
+  ./stack.sh
 fi
