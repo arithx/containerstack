@@ -1,17 +1,36 @@
 FROM ubuntu:trusty
 MAINTAINER Stephen Lowrie "stephen.lowrie@rackspace.com"
 
-EXPOSE 80 5000 8773 8774 8776 9292 3306
+EXPOSE 80 5000 8773 8774 8776 9292 3306/tcp
 
 RUN sed -i.bak "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
 RUN cat /usr/sbin/policy-rc.d
+
+ENV MYSQL_USER=mysql \
+    MYSQL_DATA_DIR=/var/lib/mysql \
+    MYSQL_RUN_DIR=/run/mysqld \
+    MYSQL_LOG_DIR=/var/log/mysql
 
 RUN apt-get update
 RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
 
 RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
-    apt-get -qqy install mysql-server
+    apt-get update \
+    && apt-get install -y mysql-server \
+    && rm -rf ${MYSQL_DATA_DIR} \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
+
+VOLUME ["${MYSQL_DATA_DIR}", "${MYSQL_RUN_DIR}"]
+ENTRYPOINT ["/sbin/entrypoint.sh"]
+CMD ["/usr/bin/mysqld_safe"]
+
+#RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
+#    echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
+#    apt-get -qqy install mysql-server
 
 #RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
