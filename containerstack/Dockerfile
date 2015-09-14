@@ -27,6 +27,7 @@ CMD ["/bin/bash", "/opt/startup.sh"]
 #    apt-get -qqy install mysql-server
 
 CMD sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
+CMD sed -i.bak s/skip-networking/#skip-networking/g /etc/mysql/my.cnf
 CMD service restart mysql
 
 #CMD sudo /etc/init.d/mysql start
