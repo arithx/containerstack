@@ -1,18 +1,11 @@
-if [ "$(whoami)" != "stack" ]; then
-  if [ ! -e "/usr/bin/git" ]; then
-      apt-get install -qqy git
-  fi
-
-  apt-get update
-  apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
-
-  git clone https://github.com/openstack-dev/devstack
-  devstack/tools/create-stack-user.sh
-  chown -R stack devstack
-  cd devstack
-  wget https://raw.github.com/arithx/containerstack/master/localrc
-  su -l stack -s "$0"
-  exit
-else
-  ./stack.sh
+if [ ! -e "/usr/bin/git" ]; then
+    apt-get install -qqy git
 fi
+
+apt-get update
+apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
+
+git clone https://github.com/openstack-dev/devstack
+devstack/tools/create-stack-user.sh
+chown -R stack devstack
+su -l stack -c "git clone https://github.com/openstack-dev/devstack; cd devstack; wget https://raw.github.com/arithx/containerstack/master/localrc; . stack.sh"
