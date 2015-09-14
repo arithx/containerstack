@@ -10,14 +10,16 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
     apt-get -qqy install mysql-server
 
-RUN mysqld_safe &
+CMD mysqld_safe
 
 RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
-RUN git clone https://git.openstack.org/openstack-dev/devstack
-RUN devstack/tools/create-stack-user.sh
-RUN chown -R stack devstack
-WORKDIR devstack
-USER stack
-RUN wget https://raw.github.com/arithx/containerstack/master/localrc
-RUN ./stack.sh
+RUN sudo mysql -uroot -ppassword -h127.0.0.1 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
+
+#RUN git clone https://github.com/arithx/ds-test devstack
+#RUN devstack/tools/create-stack-user.sh
+#RUN chown -R stack devstack
+#WORKDIR devstack
+#USER stack
+#RUN wget https://raw.github.com/arithx/containerstack/master/localrc
+#RUN ./stack.sh
