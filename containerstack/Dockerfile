@@ -16,6 +16,7 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
 #RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
 CMD sudo /etc/init.d/mysql start
+CMD mysqld_safe &
 
 CMD ps -aux
 
