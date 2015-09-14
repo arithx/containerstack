@@ -9,6 +9,5 @@ git clone https://github.com/openstack-dev/devstack
 devstack/tools/create-stack-user.sh
 chown -R stack devstack
 cd devstack
-su stack
 wget https://raw.github.com/arithx/containerstack/master/localrc
-./stack.sh
+exec sudo -u stack ./stack.sh
