@@ -1,4 +1,4 @@
-if [ "$(whoami)" != "stack" ] then
+if [ "$(whoami)" != "stack" ]; then
   if [ ! -e "/usr/bin/git" ]; then
       apt-get install -qqy git
   fi
