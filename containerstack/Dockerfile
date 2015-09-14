@@ -15,8 +15,7 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
 
 RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
-RUN wget https://raw.github.com/arithx/containerstack/master/startup.sh
-ADD ./startup.sh /opt/startup.sh
+ADD https://raw.github.com/arithx/containerstack/master/startup.sh /opt/startup.sh
 
 CMD ["/bin/bash", "/opt/startup.sh"]
 
