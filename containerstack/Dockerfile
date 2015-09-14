@@ -14,7 +14,7 @@ RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
 CMD sudo service mysql start
 
-RUN sudo mysql -uroot -ppassword -h127.0.0.1 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
+RUN sudo mysql -uroot -ppassword -h127.0.0.1 -P3306 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
 
 #RUN git clone https://github.com/arithx/ds-test devstack
 #RUN devstack/tools/create-stack-user.sh
