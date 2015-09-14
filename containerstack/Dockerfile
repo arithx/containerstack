@@ -31,7 +31,7 @@ CMD sed -i.bak s/skip-networking/#skip-networking/g /etc/mysql/my.cnf
 CMD service restart mysql
 
 #CMD sudo /etc/init.d/mysql start
-#CMD mysqld_safe &
+CMD ["mysqld_safe &"]
 
 CMD sudo mysql -uroot -ppassword -h127.0.0.1 -P3306 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
 
