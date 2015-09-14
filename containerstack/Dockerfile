@@ -17,9 +17,7 @@ RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl s
 RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
     apt-get update \
-    && apt-get install -y mysql-server \
-    && rm -rf ${MYSQL_DATA_DIR} \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y mysql-server
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
@@ -34,8 +32,8 @@ CMD ["/usr/bin/mysqld_safe"]
 
 #RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
 
-CMD sudo /etc/init.d/mysql start
-CMD mysqld_safe &
+#CMD sudo /etc/init.d/mysql start
+#CMD mysqld_safe &
 
 CMD ps -aux
 
