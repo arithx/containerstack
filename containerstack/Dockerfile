@@ -3,6 +3,9 @@ MAINTAINER Stephen Lowrie "stephen.lowrie@rackspace.com"
 
 EXPOSE 80 5000 8773 8774 8776 9292 3306
 
+RUN sed -i.bak "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
+RUN cat /usr/sbin/policy-rc.d
+
 RUN apt-get update
 RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
 
@@ -11,9 +14,6 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
     apt-get -qqy install mysql-server
 
 #RUN sed -i.bak s/bind-address/#bind-address/g /etc/mysql/my.cnf
-
-RUN sed -i.bak s/exit 101/exit 0/g /usr/sbin/policy-rc.d
-RUN cat /usr/sbin/policy-rc.d
 
 CMD sudo /etc/init.d/mysql start
 
