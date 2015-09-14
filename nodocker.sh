@@ -11,6 +11,8 @@ if [ "$(whoami)" != "stack" ] then
   chown -R stack devstack
   cd devstack
   wget https://raw.github.com/arithx/containerstack/master/localrc
+  sudo su stack -s "$0"
+  exit
 else
   exec sudo -u stack ./stack.sh
 fi
