@@ -3,13 +3,13 @@ MAINTAINER Stephen Lowrie "stephen.lowrie@rackspace.com"
 
 EXPOSE 80 5000 8773 8774 8776 9292 3306
 
-RUN sed -i.bak "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
-RUN cat /usr/sbin/policy-rc.d
+CMD sed -i.bak "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
+CMD cat /usr/sbin/policy-rc.d
 
-RUN apt-get update
-RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
+CMD apt-get update
+CMD apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
 
-RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
+CMD echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
     apt-get -qqy install mysql-server
 
@@ -17,9 +17,9 @@ RUN echo 'mysql-server mysql-server/root_password password password' | debconf-s
 
 CMD sudo /etc/init.d/mysql start
 
-RUN ps -aux
+CMD ps -aux
 
-RUN sudo mysql -uroot -ppassword -h127.0.0.1 -P3306 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
+CMD sudo mysql -uroot -ppassword -h127.0.0.1 -P3306 -e 'GRANT ALL PRIVILEGES ON *.* TO '\''root'\''@'\''%'\'' identified by '\''password'\'';'
 
 #RUN git clone https://github.com/arithx/ds-test devstack
 #RUN devstack/tools/create-stack-user.sh
