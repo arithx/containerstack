@@ -9,6 +9,9 @@ RUN cat /usr/sbin/policy-rc.d
 RUN apt-get update
 RUN apt-get -qqy install git socat curl sudo vim wget net-tools git socat curl sudo vim wget net-tools libffi-dev libkrb5-dev libev-dev libvirt-dev libsqlite3-dev libxml2-dev libxslt-dev libpq-dev libssl-dev libyaml-dev make build-essential python-dev libffi-dev libssl-dev
 
+RUN dpkg-divert --local --rename --add /sbin/initctl
+RUN ln -s /bin/true /sbin/initctl
+
 RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections; \
     echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections; \
     apt-get -y install mysql-client mysql-server
