@@ -1,4 +1,6 @@
-if [ cat /etc/*-release | egrep "DISTRIB_ID=(.*)" | sed "s/DISTRIB_ID=//g" = "CoreOS" ]; then
+if [ $(cat /etc/*-release | egrep "DISTRIB_ID=(.*)" | sed "s/DISTRIB_ID=//g") == "CoreOS" ]; then
+  update_engine_client -update
+
   if [ ! -e "/opt" ]; then
     mkdir /opt
   fi
