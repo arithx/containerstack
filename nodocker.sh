@@ -11,4 +11,4 @@ chown -R stack:stack /root
 chmod -R +rx ~
 wget https://raw.github.com/arithx/containerstack/master/stack_setup.sh -P /tmp
 chmod +755 /tmp/stack_setup.sh
-sudo -u stack /tmp/stack_setup.sh
+sudo -H -u stack /tmp/stack_setup.sh
